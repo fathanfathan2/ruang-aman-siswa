@@ -6,7 +6,7 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div class="flex items-center gap-3 sm:gap-4">
                     <div class="bg-white dark:bg-gray-800 p-2 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 flex-shrink-0">
-                        <img src="{{ asset('images/logoras.png') }}" alt="Logo Ruang Aman" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" 
+                        <img src="{{ asset('images/logorasdark.png') }}" alt="Logo Ruang Aman" class="w-10 h-10 sm:w-12 sm:h-12 object-contain" 
                              onerror="this.outerHTML='<div class=\'w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center\'><svg class=\'w-6 h-6 text-blue-600 dark:text-blue-400\' fill=\'currentColor\' viewBox=\'0 0 24 24\'><path d=\'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\'/></svg></div>'">
                     </div>
                     <div>
