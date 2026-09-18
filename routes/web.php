@@ -7,26 +7,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Ini Dashboard default bawaan Breeze (bisa dibiarkan saja)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-// --- TAMBAHAN UNTUK ROLE RUANG AMAN SISWA ---
+// --- RUTE ROLE RUANG AMAN SISWA ---
 Route::get('/siswa/dashboard', function () {
-    return 'Selamat datang di halaman Siswa!';
+    return view('siswa.dashboard');
 })->middleware(['auth', 'verified'])->name('siswa.dashboard');
 
 Route::get('/bk/dashboard', function () {
-    return 'Selamat datang di halaman Guru BK!';
+    return view('bk.dashboard');
 })->middleware(['auth', 'verified'])->name('bk.dashboard');
 
 Route::get('/admin/dashboard', function () {
-    return 'Selamat datang di halaman Admin!';
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
-// --------------------------------------------
-
+// ----------------------------------
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
