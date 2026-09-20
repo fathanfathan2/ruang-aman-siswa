@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\SesiKonselingController;
+use App\Http\Controllers\JenisPelanggaranController;
+use App\Http\Controllers\CatatanPoinController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +39,13 @@ Route::middleware('auth')->group(function () {
 
 // SESI KONSELING → sementara TANPA login
 Route::resource('sesi-konseling', SesiKonselingController::class);
+
+// --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
+Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)
+    ->except(['show']);
+
+Route::resource('catatan-poin', CatatanPoinController::class)
+    ->only(['index', 'create', 'store']);
+// -------------------------------------------------
 
 require __DIR__.'/auth.php';
