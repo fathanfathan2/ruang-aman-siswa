@@ -1,4 +1,5 @@
 <x-app-layout>
+<<<<<<< HEAD
     <x-slot name="header">
         <div class="flex items-center gap-4">
             <!-- Logo dengan Fallback -->
@@ -9,6 +10,17 @@
             </div>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Dashboard Guru BK') }}
+=======
+<x-slot name="header">
+        <div class="flex items-center gap-5">
+            <img src="{{ asset('images/logoras.png') }}" 
+                 alt="Logo RAS" 
+                 class="h-16 w-auto object-contain drop-shadow-md"
+                 onerror="this.outerHTML='<div class=\'h-16 w-16 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold\'>RAS</div>'">
+            
+            <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200 leading-tight tracking-wide">
+                {{ __('Ruang Aman Siswa') }}
+>>>>>>> 12fe6072270c266e8511c7382bd2ae15e3119904
             </h2>
         </div>
     </x-slot>
