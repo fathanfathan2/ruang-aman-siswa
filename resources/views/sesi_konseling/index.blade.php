@@ -1,84 +1,127 @@
 <x-app-layout>
+    <!-- Header Standar Fathan -->
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Daftar Sesi Konseling
+        <div class="flex items-center gap-5">
+            <img src="{{ asset('images/logoras.png') }}" 
+                 alt="Logo RAS" 
+                 class="h-16 w-auto object-contain drop-shadow-md"
+                 onerror="this.outerHTML='<div class=\'h-16 w-16 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold\'>RAS</div>'">
+            
+            <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200 leading-tight tracking-wide">
+                {{ __('Ruang Aman Siswa') }}
             </h2>
-            <a href="{{ route('sesi-konseling.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
-                + Booking Konseling
-            </a>
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <!-- Background Utama Dark Mode -->
+    <div class="py-12 bg-slate-900 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            @if (session('success'))
-                <div class="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-md text-sm">
-                    {{ session('success') }}
+            
+            <!-- Banner Header Fitur (Gradient Cyan-Blue) -->
+            <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-t-2xl shadow-lg p-6 sm:p-8 flex justify-between items-center border-b border-blue-400/30 relative overflow-hidden">
+<div class="relative z-10">
+                    <!-- Tombol Kembali -->
+                    <a href="/dashboard" class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-50 hover:text-white transition-all bg-black/10 hover:bg-black/30 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Kembali ke Dashboard
+                    </a>
+                    
+                    <h3 class="text-2xl font-bold text-white tracking-wide">Jadwal Sesi Konseling</h3>
+                    <p class="text-blue-100 text-sm mt-1">Kelola dan pantau jadwal pertemuan tatap muka di sini.</p>
                 </div>
-            @endif
+                
+                <div class="relative z-10">
+                    <!-- Tombol Tambah Jadwal Baru (Rute asli Davin) -->
+                    <a href="{{ route('sesi-konseling.create') }}" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm font-bold py-2.5 px-6 rounded-xl transition duration-300 shadow-lg flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Buat Jadwal
+                    </a>
+                </div>
+                <!-- Efek cahaya background -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+            </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+            <!-- Area Konten Utama (Kartu Slate 800) -->
+            <div class="bg-slate-800 rounded-b-2xl shadow-xl p-6 sm:p-8 border-x border-b border-slate-700">
+
+                <!-- Alert Pesan Sukses (Logika asli Davin) -->
+                @if (session('success'))
+                    <div class="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3">
+                        <svg class="w-5 h-5 text-emerald-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-emerald-400 text-sm font-medium">{{ session('success') }}</p>
+                    </div>
+                @endif
+
+                <!-- Tabel Jadwal -->
+                <div class="overflow-x-auto rounded-xl border border-slate-700">
+                    <table class="w-full text-sm text-left text-slate-300">
+                        <thead class="text-xs uppercase bg-slate-900/50 text-slate-400 border-b border-slate-700">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Topik</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jadwal</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                <th scope="col" class="px-6 py-4 font-semibold">No</th>
+                                <th scope="col" class="px-6 py-4 font-semibold">Nama Siswa</th>
+                                <th scope="col" class="px-6 py-4 font-semibold">Tanggal & Waktu</th>
+                                <th scope="col" class="px-6 py-4 font-semibold">Status</th>
+                                <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse ($sesiKonselings as $sesiKonseling)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $sesiKonseling->topik }}
+                        <tbody class="divide-y divide-slate-700/50">
+                            <!-- Looping Data (Logika asli Davin) -->
+                            @forelse ($sesiKonselings as $index => $jadwal)
+                                <tr class="hover:bg-slate-700/30 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-slate-400">{{ $index + 1 }}</td>
+                                    <td class="px-6 py-4 font-bold text-white">{{ $jadwal->siswa->name ?? 'Siswa Tidak Ditemukan' }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            {{ \Carbon\Carbon::parse($jadwal->waktu_konseling)->format('d M Y, H:i') }}
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $sesiKonseling->jadwal->format('d M Y, H:i') }}
+                                    <td class="px-6 py-4">
+                                        @if($jadwal->status == 'menunggu')
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Menunggu</span>
+                                        @elseif($jadwal->status == 'disetujui')
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Disetujui</span>
+                                        @else
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">Dibatalkan</span>
+                                        @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full
-                                            {{ $sesiKonseling->tipe === 'terbuka' ? 'bg-indigo-100 text-indigo-700' : 'bg-purple-100 text-purple-700' }}">
-                                            {{ ucfirst($sesiKonseling->tipe) }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full
-                                            @if ($sesiKonseling->status === 'menunggu') bg-yellow-100 text-yellow-700
-                                            @elseif ($sesiKonseling->status === 'disetujui') bg-blue-100 text-blue-700
-                                            @else bg-green-100 text-green-700
-                                            @endif">
-                                            {{ ucfirst($sesiKonseling->status) }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-3">
-                                        <a href="{{ route('sesi-konseling.show', $sesiKonseling) }}"
-                                           class="text-indigo-600 hover:text-indigo-900">Detail</a>
-                                        <a href="{{ route('sesi-konseling.edit', $sesiKonseling) }}"
-                                           class="text-gray-600 hover:text-gray-900">Edit</a>
-                                        <form action="{{ route('sesi-konseling.destroy', $sesiKonseling) }}" method="POST"
-                                              class="inline" onsubmit="return confirm('Yakin ingin menghapus sesi ini?');">
+                                    <td class="px-6 py-4 flex justify-center gap-3">
+                                        <!-- Tombol Detail -->
+                                        <a href="{{ route('sesi-konseling.show', $jadwal->id) }}" class="text-cyan-400 hover:text-cyan-300 transition-colors font-medium text-sm">
+                                            Lihat Detail
+                                        </a>
+                                        
+                                        <!-- Form Hapus -->
+                                        <form action="{{ route('sesi-konseling.destroy', $jadwal->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan/menghapus jadwal ini?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
+                                            <button type="submit" class="text-rose-400 hover:text-rose-300 transition-colors font-medium text-sm">
+                                                Hapus
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-8 text-center text-sm text-gray-400">
-                                        Belum ada sesi konseling yang dibooking.
+                                    <td colspan="5" class="px-6 py-12 text-center text-slate-500">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <svg class="w-12 h-12 mb-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <p class="font-medium text-slate-400">Belum ada jadwal konseling.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Paginasi (Jika ada) -->
+                @if(method_exists($sesiKonselings, 'links'))
+                    <div class="mt-6">
+                        {{ $sesiKonselings->links() }}
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
