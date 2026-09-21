@@ -1,16 +1,17 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center overflow-hidden shadow-sm">
-                <img src="{{ asset('images/logoras.png') }}" alt="Logo RAS" 
-                     class="w-full h-full object-cover" 
-                     onerror="this.outerHTML='<span class=\'text-white font-bold text-lg\'>RAS</span>'">
-            </div>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Dashboard Admin') }}
+<x-slot name="header">
+        <div class="flex items-center gap-5">
+            <!-- Lingkaran dihapus, logo diperbesar (h-16) dan dibuat natural (object-contain) -->
+            <img src="{{ asset('images/logoras.png') }}" 
+                 alt="Logo RAS" 
+                 class="h-16 w-auto object-contain drop-shadow-md"
+                 onerror="this.outerHTML='<div class=\'h-16 w-16 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold\'>RAS</div>'">
+            
+            <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200 leading-tight tracking-wide">
+                {{ __('Ruang Aman Siswa') }}
             </h2>
         </div>
-    </x-slot>
+    </x-slot>    
 
     <!-- Memaksa background menjadi gelap ala tema gambar -->
     <div class="py-12 bg-slate-900 min-h-screen">
