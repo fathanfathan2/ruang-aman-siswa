@@ -11,7 +11,15 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $role = auth()->user()->role;
+
+    if ($role === 'bk') {
+        return redirect('/bk/dashboard');
+    } elseif ($role === 'admin') {
+        return redirect('/admin/dashboard');
+    } else {
+        return redirect('/siswa/dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // --- RUTE ROLE RUANG AMAN SISWA ---
