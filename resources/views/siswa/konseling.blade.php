@@ -58,7 +58,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('sesi-konseling.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('siswa.konseling.store') }}" method="POST" class="space-y-6">
                     @csrf
 
                     <!-- Input Topik Konseling -->

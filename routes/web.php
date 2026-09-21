@@ -66,12 +66,4 @@ Route::resource('catatan-poin', CatatanPoinController::class)
     ->only(['index', 'create', 'store']);
 // -------------------------------------------------
 
-// --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
-Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)
-    ->except(['show']);
-
-Route::resource('catatan-poin', CatatanPoinController::class)
-    ->only(['index', 'create', 'store']);
-// -------------------------------------------------
-
 require __DIR__.'/auth.php';
