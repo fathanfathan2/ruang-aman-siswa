@@ -29,7 +29,7 @@
                     <!-- Badge Role -->
                     <div class="bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-xl shadow-inner text-center">
                         <span class="block text-xs text-blue-100 uppercase tracking-wider mb-1">Status Akun</span>
-                        <span class="block text-xl font-bold text-white">Guru BK / Admin</span>
+                        <span class="block text-xl font-bold text-white">Guru BK</span>
                     </div>
                 </div>
                 <!-- Hiasan Background (Lingkaran) -->
