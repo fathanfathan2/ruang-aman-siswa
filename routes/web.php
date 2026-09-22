@@ -29,7 +29,12 @@ Route::get('/dashboard', function () {
 Route::get('/siswa/dashboard', [SesiKonselingController::class, 'dashboardSiswa'])->name('siswa.dashboard');
 
 Route::get('/bk/dashboard', function () {
-    return view('bk.dashboard');
+    $catatanPoins = \App\Models\CatatanPoin::with(['siswa', 'pelanggaran'])
+        ->orderByDesc('tanggal')
+        ->limit(5)
+        ->get();
+
+    return view('bk.dashboard', compact('catatanPoins'));
 })->middleware(['auth', 'verified'])->name('bk.dashboard');
 
 Route::get('/admin/dashboard', function () {

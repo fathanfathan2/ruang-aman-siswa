@@ -89,17 +89,56 @@
             </div>
 
             <!-- Area Aktivitas / Empty State (Slate 800) -->
-            <div class="bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-700">
-                <h4 class="text-lg font-bold text-white mb-6">Aktivitas Terakhir</h4>
-                <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-900/50 rounded-xl border-2 border-dashed border-slate-700">
-                    <div class="text-slate-500 mb-3 bg-slate-800 p-4 rounded-full shadow-inner">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <p class="text-slate-300 font-bold text-lg">Semua Aman Terkendali</p>
-                    <p class="text-slate-500 text-sm mt-1 max-w-sm">Belum ada notifikasi atau laporan aktivitas terbaru di sistem hari ini.</p>
-                </div>
-            </div>
-
-        </div>
+            <!-- Area Histori Kedisiplinan Terbaru -->
+<div class="bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-700">
+    <div class="flex justify-between items-center mb-6">
+        <h4 class="text-lg font-bold text-white">Histori Kedisiplinan Terbaru</h4>
+        <a href="{{ route('catatan-poin.index') }}" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300">
+            Lihat Semua &rarr;
+        </a>
     </div>
+
+    @if ($catatanPoins->isEmpty())
+        <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-900/50 rounded-xl border-2 border-dashed border-slate-700">
+            <div class="text-slate-500 mb-3 bg-slate-800 p-4 rounded-full shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <p class="text-slate-300 font-bold text-lg">Semua Aman Terkendali</p>
+            <p class="text-slate-500 text-sm mt-1 max-w-sm">Belum ada catatan poin kedisiplinan di sistem hari ini.</p>
+        </div>
+    @else
+        <div class="overflow-x-auto rounded-xl border border-slate-700">
+            <table class="w-full text-sm text-left text-slate-300">
+                <thead class="text-xs uppercase bg-slate-900/50 text-slate-400 border-b border-slate-700">
+                    <tr>
+                        <th class="px-6 py-4 font-semibold">Siswa</th>
+                        <th class="px-6 py-4 font-semibold">Pelanggaran</th>
+                        <th class="px-6 py-4 font-semibold text-center">Poin</th>
+                        <th class="px-6 py-4 font-semibold">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-700/50">
+                    @foreach ($catatanPoins as $catatanPoin)
+                        <tr class="hover:bg-slate-700/30 transition-colors">
+                            <td class="px-6 py-4 font-bold text-white">
+                                {{ $catatanPoin->siswa->name ?? '-' }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $catatanPoin->pelanggaran->nama_pelanggaran ?? '-' }}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="font-bold text-rose-400">
+                                    +{{ $catatanPoin->pelanggaran->poin ?? '-' }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $catatanPoin->tanggal->format('d M Y') }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+</div>
 </x-app-layout>
