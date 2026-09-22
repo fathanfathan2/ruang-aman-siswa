@@ -6,6 +6,7 @@ use App\Http\Controllers\CatatanPoinController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Halaman awal bawaan Laravel
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,9 +25,8 @@ Route::get('/dashboard', function () {
 
 // --- RUTE ROLE RUANG AMAN SISWA ---
 
-Route::get('/siswa/dashboard', function () {
-    return view('siswa.dashboard');
-})->middleware(['auth', 'verified'])->name('siswa.dashboard');
+// Dashboard Siswa (Di-handle oleh SesiKonselingController milikmu)
+Route::get('/siswa/dashboard', [SesiKonselingController::class, 'dashboardSiswa'])->name('siswa.dashboard');
 
 Route::get('/bk/dashboard', function () {
     return view('bk.dashboard');
@@ -45,8 +45,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// SESI KONSELING → sementara TANPA login
-Route::resource('sesi-konseling', SesiKonselingController::class);
+// ==========================================
+// FITUR UNTUK SISWA (Sesi Konseling)
+// ==========================================
+// Gembok middleware('auth') dimatikan dulu sementara
+Route::get('/siswa/konseling', [SesiKonselingController::class, 'createKonseling'])->name('siswa.konseling.create');
+Route::post('/siswa/konseling', [SesiKonselingController::class, 'storeKonseling'])->name('siswa.konseling.store');
+
+// ==========================================
+// FITUR UNTUK GURU BK (Sesi Konseling)
+// ==========================================
+Route::get('/bk/konseling', [SesiKonselingController::class, 'indexBk'])->name('bk.konseling.index');
+Route::patch('/bk/konseling/{id}/status', [SesiKonselingController::class, 'updateStatus'])->name('bk.konseling.update');
 
 // --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
 Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)

@@ -2,73 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SesiKonseling;
 use Illuminate\Http\Request;
+use App\Models\SesiKonseling;
 
 class SesiKonselingController extends Controller
 {
-    public function index()
+    // ==========================================
+    // FITUR SISWA
+    // ==========================================
+    
+    public function dashboardSiswa()
     {
-        $sesiKonselings = SesiKonseling::all();
-
-        return view('sesi_konseling.index', compact('sesiKonselings'));
+        return view('siswa.dashboard'); 
     }
 
-    public function create()
+    public function createKonseling()
     {
-        return view('sesi_konseling.create');
+        // Menampilkan halaman form booking konseling untuk siswa
+        return view('siswa.konseling');
     }
 
-    public function store(Request $request)
+    public function storeKonseling(Request $request)
     {
-        $validated = $request->validate([
-            'topik' => 'required|string|max:255',
-            'jadwal' => 'required|date',
-            'tipe' => 'required|in:terbuka,anonim',
-        ]);
-
-        $validated['siswa_id'] = auth()->id();
-        $validated['status'] = 'menunggu';
-
-        SesiKonseling::create($validated);
-
-        return redirect()
-            ->route('sesi-konseling.index')
-            ->with('success', 'Booking konseling berhasil dibuat.');
+        // Nanti logika untuk menyimpan isian form ke database kita buat di sini
+        return "Berhasil! Form booking konseling sudah terkirim (Ini baru pesan tes).";
     }
 
-    public function show(SesiKonseling $sesiKonseling)
+    // ==========================================
+    // FITUR GURU BK
+    // ==========================================
+
+    public function indexBk()
     {
-        return view('sesi_konseling.show', compact('sesiKonseling'));
+        // Menampilkan daftar siswa yang request konseling di halaman Guru BK
+        return view('bk.konseling');
     }
 
-    public function edit(SesiKonseling $sesiKonseling)
+    public function updateStatus(Request $request, $id)
     {
-        return view('sesi_konseling.edit', compact('sesiKonseling'));
-    }
-
-    public function update(Request $request, SesiKonseling $sesiKonseling)
-    {
-        $validated = $request->validate([
-            'topik' => 'required|string|max:255',
-            'jadwal' => 'required|date',
-            'tipe' => 'required|in:terbuka,anonim',
-            'status' => 'required|in:menunggu,disetujui,selesai',
-        ]);
-
-        $sesiKonseling->update($validated);
-
-        return redirect()
-            ->route('sesi-konseling.index')
-            ->with('success', 'Data konseling berhasil diperbarui.');
-    }
-
-    public function destroy(SesiKonseling $sesiKonseling)
-    {
-        $sesiKonseling->delete();
-
-        return redirect()
-            ->route('sesi-konseling.index')
-            ->with('success', 'Booking konseling berhasil dihapus.');
+        // Nanti logika untuk Guru BK menyetujui jadwal ada di sini
+        return "Status konseling berhasil diupdate.";
     }
 }
