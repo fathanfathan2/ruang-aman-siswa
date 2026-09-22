@@ -41,8 +41,9 @@
                 <!-- Kolom Kiri: Quick Actions -->
                 <div class="lg:col-span-2 space-y-6 sm:space-y-8">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                        <!-- Action 1: Buat Laporan -->
-                        <button class="group relative flex flex-col items-start justify-between bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 w-full text-left overflow-hidden">
+                        
+                        <!-- Action 1: Buat Laporan (Sekarang jadi Link <a>) -->
+                        <a href="#" class="group relative flex flex-col items-start justify-between bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 w-full text-left overflow-hidden">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-slate-700/50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
                             <div class="bg-blue-600 text-white p-3.5 rounded-2xl mb-6 relative z-10 shadow-lg shadow-blue-600/30 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
@@ -54,7 +55,7 @@
                             <div class="mt-6 flex items-center text-sm font-semibold text-blue-400 group-hover:translate-x-2 transition-transform relative z-10">
                                 Mulai sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                             </div>
-                        </button>
+                        </a>
 
                         <!-- Action 2: Sesi Konseling (Sudah Diperbaiki Menjadi Link) -->
                         <a href="{{ route('sesi-konseling.index') }}" class="group relative flex flex-col items-start justify-between bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700 hover:border-cyan-400 hover:-translate-y-1 transition-all duration-300 w-full text-left overflow-hidden">
