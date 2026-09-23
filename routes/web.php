@@ -4,6 +4,7 @@ use App\Http\Controllers\SesiKonselingController;
 use App\Http\Controllers\JenisPelanggaranController;
 use App\Http\Controllers\CatatanPoinController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LaporanController; // <-- Tambahkan baris ini
 use Illuminate\Support\Facades\Route;
 
 // Halaman awal bawaan Laravel
@@ -46,11 +47,14 @@ Route::middleware('auth')->group(function () {
 });
 
 // ==========================================
-// FITUR UNTUK SISWA (Sesi Konseling)
+// FITUR UNTUK SISWA (Sesi Konseling & Laporan)
 // ==========================================
 // Gembok middleware('auth') dimatikan dulu sementara
 Route::get('/siswa/konseling', [SesiKonselingController::class, 'createKonseling'])->name('siswa.konseling.create');
 Route::post('/siswa/konseling', [SesiKonselingController::class, 'storeKonseling'])->name('siswa.konseling.store');
+
+// --- Rute Form Laporan Siswa ---
+Route::get('/siswa/lapor', [LaporanController::class, 'create'])->name('siswa.laporan.create');
 
 // ==========================================
 // FITUR UNTUK GURU BK (Sesi Konseling)
