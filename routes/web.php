@@ -3,6 +3,9 @@
 use App\Http\Controllers\SesiKonselingController;
 use App\Http\Controllers\JenisPelanggaranController;
 use App\Http\Controllers\CatatanPoinController;
+use App\Http\Controllers\JenisPrestasiController;
+use App\Http\Controllers\RekapPoinController;
+use App\Http\Controllers\CatatanPrestasiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +69,13 @@ Route::patch('/bk/konseling/{id}/status', [SesiKonselingController::class, 'upda
 // --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
 Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)
     ->except(['show']);
+Route::resource('jenis-prestasi', JenisPrestasiController::class)
+    ->except(['show']);
+
+Route::resource('catatan-prestasi', CatatanPrestasiController::class)
+    ->only(['index', 'create', 'store']);
+
+    Route::get('/rekap-poin', [RekapPoinController::class, 'index'])->name('rekap-poin.index');
 
 Route::resource('catatan-poin', CatatanPoinController::class)
     ->only(['index', 'create', 'store']);
