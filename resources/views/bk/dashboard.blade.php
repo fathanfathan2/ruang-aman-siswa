@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 <!-- Kartu 1: Sesi Konseling -->
-                <a href="{{ route('sesi-konseling.index') }}" class="group bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-700 transition-all duration-300 hover:shadow-cyan-500/10 hover:border-cyan-500/50 hover:-translate-y-1 block relative overflow-hidden">
+                <a href="{{ route('bk.konseling.index') }}"" class="group bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-700 transition-all duration-300 hover:shadow-cyan-500/10 hover:border-cyan-500/50 hover:-translate-y-1 block relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
                     <div class="flex items-center gap-4 mb-4">
                         <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400 border border-cyan-500/20 group-hover:bg-cyan-500 group-hover:text-white transition-colors">

@@ -21,7 +21,8 @@
 
             <!-- Form Card -->
             <div class="bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-10 border border-slate-700">
-                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <!-- Action diubah mengarah ke route store -->
+                <form action="{{ route('siswa.laporan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     
                     <!-- Judul Laporan -->
@@ -65,7 +66,8 @@
                     <!-- Tombol Aksi -->
                     <div class="flex justify-end gap-4 pt-4 border-t border-slate-700">
                         <a href="{{ route('siswa.dashboard') }}" class="px-6 py-3 rounded-xl text-slate-300 font-semibold hover:bg-slate-700 transition-colors">Batal</a>
-                        <button type="button" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all transform hover:-translate-y-0.5">
+                        <!-- Type diubah menjadi submit -->
+                        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all transform hover:-translate-y-0.5">
                             Kirim Laporan
                         </button>
                     </div>

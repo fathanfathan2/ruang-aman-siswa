@@ -71,3 +71,7 @@ Route::resource('catatan-poin', CatatanPoinController::class)
 // -------------------------------------------------
 
 require __DIR__.'/auth.php';
+
+// --- Rute Form Laporan Siswa ---
+Route::get('/siswa/lapor', [LaporanController::class, 'create'])->name('siswa.laporan.create');
+Route::post('/siswa/lapor', [LaporanController::class, 'store'])->name('siswa.laporan.store'); // <-- Tambahkan ini
