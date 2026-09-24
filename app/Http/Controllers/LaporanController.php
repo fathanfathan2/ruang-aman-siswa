@@ -36,4 +36,28 @@ class LaporanController extends Controller
         // 3. Kembalikan siswa ke dashboard setelah sukses
         return redirect()->route('siswa.dashboard')->with('success', 'Laporan berhasil dikirim dan dijamin kerahasiaannya.');
     }
+
+    // ... fungsi create dan store sebelumnya ada di atas sini ...
+
+    // Menampilkan detail laporan untuk Guru BK
+    public function showBk($id)
+    {
+        $laporan = Laporan::with('user')->findOrFail($id);
+        return view('bk.laporan.show', compact('laporan'));
+    }
+
+    // Mengubah status laporan (Menunggu -> Diproses -> Selesai)
+    public function updateStatusBk(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:menunggu,diproses,selesai'
+        ]);
+
+        $laporan = Laporan::findOrFail($id);
+        $laporan->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->route('bk.dashboard')->with('success', 'Status laporan berhasil diperbarui!');
+    }
 }
