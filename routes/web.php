@@ -37,10 +37,18 @@ Route::get('/bk/dashboard', function () {
     return view('bk.dashboard', compact('laporans'));
 })->middleware(['auth', 'verified'])->name('bk.dashboard');
 
-// Dashboard Admin
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
+// ==========================================
+// FITUR UNTUK ADMIN (Manajemen User)
+// ==========================================
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    
+    // Halaman Utama Admin
+    Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+
+    // Rute Lengkap CRUD (Create, Read, Update, Delete) untuk Kelola Akun
+    Route::resource('users', App\Http\Controllers\UserController::class);
+    
+});
 
 // ----------------------------------
 

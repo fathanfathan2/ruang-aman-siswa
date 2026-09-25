@@ -11,7 +11,7 @@
                 {{ __('Ruang Aman Siswa') }}
             </h2>
         </div>
-    </x-slot>    
+    </x-slot>   
 
     <!-- Background Utama Dark Mode -->
     <div class="py-12 bg-slate-900 min-h-screen">
@@ -39,7 +39,7 @@
             <!-- Quick Stats (Pajangan Statistik Admin - Versi Premium) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <!-- Kartu 1: Total Pengguna (Biru) -->
+                <!-- Kartu 1: Total Pengguna (Dinamic Database) -->
                 <div class="group bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-700 transition-all duration-300 hover:shadow-blue-500/10 hover:border-blue-500/50 hover:-translate-y-1 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
                     <div class="flex items-center gap-4 mb-4">
@@ -49,7 +49,8 @@
                         <h4 class="text-slate-400 text-sm font-medium">Total Akun Terdaftar</h4>
                     </div>
                     <div class="flex items-end justify-between">
-                        <p class="text-4xl font-bold text-white group-hover:text-blue-400 transition-colors">0</p>
+                        <!-- Variabel Dinamis dari Controller -->
+                        <p class="text-4xl font-bold text-white group-hover:text-blue-400 transition-colors">{{ $totalUser }}</p>
                         <span class="text-blue-400 text-xs font-semibold uppercase tracking-wider group-hover:text-blue-300">Pengguna Aktif</span>
                     </div>
                 </div>
@@ -117,13 +118,13 @@
                     <p class="text-xs text-slate-400 mt-1">Akses panel jadwal konseling.</p>
                 </a>
 
-                <!-- Link 4: Manajemen Pengguna (Belum Aktif) -->
-                <a href="#" class="group p-5 bg-slate-800 border border-slate-700 rounded-2xl hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/10 transition-all text-left opacity-60 cursor-not-allowed">
-                    <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center mb-4 transition-colors">
+                <!-- Link 4: Manajemen Pengguna (Sudah Aktif!) -->
+                <a href="{{ route('admin.users.index') }}" class="group p-5 bg-slate-800 border border-slate-700 rounded-2xl hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/10 transition-all text-left">
+                    <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     </div>
-                    <h5 class="font-bold text-white">Kelola User</h5>
-                    <p class="text-xs text-slate-400 mt-1">Segera Hadir...</p>
+                    <h5 class="font-bold text-white group-hover:text-blue-400 transition-colors">Kelola User</h5>
+                    <p class="text-xs text-slate-400 mt-1">Tambah, Edit & Hapus Akun</p>
                 </a>
 
             </div>
