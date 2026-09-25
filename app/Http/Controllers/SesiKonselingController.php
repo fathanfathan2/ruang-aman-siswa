@@ -11,9 +11,12 @@ class SesiKonselingController extends Controller
     // FITUR SISWA
     // ==========================================
     
-    public function dashboardSiswa()
+public function dashboardSiswa()
     {
-        return view('siswa.dashboard'); 
+        // Ambil data laporan khusus milik siswa yang sedang login, urutkan dari yang terbaru
+        $laporans = \App\Models\Laporan::where('user_id', auth()->id())->latest()->get();
+        
+        return view('siswa.dashboard', compact('laporans')); 
     }
 
     public function createKonseling()
