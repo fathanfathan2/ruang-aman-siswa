@@ -57,7 +57,7 @@
                             </div>
                         </a>
 
-                        <!-- Action 2: Sesi Konseling -->
+                        <!-- Action 2: Sesi Konseling (Sudah Diperbaiki Menjadi Link) -->
                         <a href="{{ route('siswa.konseling.create') }}" class="group relative flex flex-col items-start justify-between bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700 hover:border-cyan-400 hover:-translate-y-1 transition-all duration-300 w-full text-left overflow-hidden">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-slate-700/50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
                             <div class="bg-cyan-500 text-white p-3.5 rounded-2xl mb-6 relative z-10 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
@@ -84,33 +84,46 @@
                         
                         <div class="divide-y divide-slate-700/50">
                             @forelse($laporans as $laporan)
-                                <div class="p-6 hover:bg-slate-700/30 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                    <div class="flex-1">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <span class="px-3 py-1 rounded-full bg-slate-700/50 border border-slate-600 text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                                                {{ $laporan->kategori }}
-                                            </span>
-                                            <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                                {{ $laporan->created_at->format('d M Y, H:i') }}
+                                <div class="p-6 hover:bg-slate-700/30 transition-colors">
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <span class="px-3 py-1 rounded-full bg-slate-700/50 border border-slate-600 text-[10px] font-bold text-slate-300 uppercase tracking-wider">
+                                                    {{ $laporan->kategori }}
+                                                </span>
+                                                <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                                    {{ $laporan->created_at->format('d M Y, H:i') }}
+                                                </span>
+                                            </div>
+                                            <h5 class="text-lg font-bold text-white mb-1">{{ $laporan->judul }}</h5>
+                                            <p class="text-sm text-slate-400 line-clamp-1">{{ $laporan->deskripsi }}</p>
+                                        </div>
+                                        
+                                        <div class="shrink-0 mt-2 sm:mt-0">
+                                            @php
+                                                $statusColors = [
+                                                    'menunggu' => 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+                                                    'diproses' => 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+                                                    'selesai' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+                                                ];
+                                            @endphp
+                                            <span class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs font-bold border uppercase tracking-wider shadow-sm {{ $statusColors[$laporan->status] ?? 'bg-slate-500/10 text-slate-400 border-slate-500/20' }}">
+                                                {{ $laporan->status }}
                                             </span>
                                         </div>
-                                        <h5 class="text-lg font-bold text-white mb-1">{{ $laporan->judul }}</h5>
-                                        <p class="text-sm text-slate-400 line-clamp-1">{{ $laporan->deskripsi }}</p>
                                     </div>
-                                    
-                                    <div class="shrink-0 mt-2 sm:mt-0">
-                                        @php
-                                            $statusColors = [
-                                                'menunggu' => 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-                                                'diproses' => 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-                                                'selesai' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-                                            ];
-                                        @endphp
-                                        <span class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs font-bold border uppercase tracking-wider shadow-sm {{ $statusColors[$laporan->status] ?? 'bg-slate-500/10 text-slate-400 border-slate-500/20' }}">
-                                            {{ $laporan->status }}
-                                        </span>
-                                    </div>
+
+                                    {{-- Balasan / Catatan dari BK (tampil jika ada) --}}
+                                    @if($laporan->catatan_bk)
+                                        <div class="mt-4 flex items-start gap-2.5 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-3.5 shadow-sm">
+                                            <svg class="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                                            <div>
+                                                <p class="text-xs font-bold text-cyan-400 mb-1">Balasan dari Guru BK:</p>
+                                                <p class="text-sm text-slate-300 leading-relaxed">{{ $laporan->catatan_bk }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             @empty
                                 <!-- Empty State -->
@@ -152,9 +165,9 @@
                             <span class="text-3xl font-black text-white">{{ $laporans->count() }}</span>
                             <span class="text-xs font-medium text-slate-400 mt-1 uppercase tracking-wider">Laporan</span>
                         </div>
-                        <!-- Indikator Konseling (Nanti kita buat dinamis juga) -->
-                        <div class="bg-slate-800 p-5 rounded-3xl shadow-xl border border-slate-700 flex flex-col justify-center items-center text-center opacity-70 hover:opacity-100 transition-opacity">
-                            <span class="text-3xl font-black text-white">0</span>
+                        <!-- Indikator Konseling (Dinamis) -->
+                        <div class="bg-slate-800 p-5 rounded-3xl shadow-xl border border-slate-700 flex flex-col justify-center items-center text-center">
+                            <span class="text-3xl font-black text-white">{{ $jumlahKonseling ?? 0 }}</span>
                             <span class="text-xs font-medium text-slate-400 mt-1 uppercase tracking-wider">Konseling</span>
                         </div>
                     </div>
