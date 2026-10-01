@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class JenisPelanggaranController extends Controller
 {
-    public function index() {
-    $jenisPelanggaran = JenisPelanggaran::all(); // sesuaikan dengan nama model Anda
-    // Arahkan ke file index milik jenis_pelanggaran
-    return view('jenis_pelanggaran.index', compact('jenisPelanggaran')); 
-}
+    public function index()
+    {
+        $jenisPelanggarans = JenisPelanggaran::orderBy('nama_pelanggaran')->get();
 
+        return view('jenis_pelanggaran.index', compact('jenisPelanggarans'));
+    }
 
     public function create()
     {
