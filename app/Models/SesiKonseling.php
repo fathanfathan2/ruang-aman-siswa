@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
 
 class SesiKonseling extends Model
@@ -32,5 +33,11 @@ class SesiKonseling extends Model
     public function siswa(): BelongsTo
     {
         return $this->belongsTo(User::class, 'siswa_id');
+    }
+
+    // Relasi ke pesan-pesan dalam sesi ini (fitur tanya jawab)
+    public function pesans(): HasMany
+    {
+        return $this->hasMany(PesanKonseling::class, 'sesi_konseling_id')->oldest();
     }
 }

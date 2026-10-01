@@ -70,7 +70,7 @@
                         <label class="block text-sm font-medium text-slate-300 mb-2">Tipe Konseling</label>
                         <div class="flex gap-4">
                             <label class="flex-1 flex items-center gap-3 bg-slate-700/50 border border-slate-600 rounded-xl p-3.5 text-sm text-white cursor-pointer hover:border-blue-500 transition">
-                                <input type="type" name="tipe" value="terbuka" class="text-blue-600 focus:ring-blue-500 bg-slate-700 border-slate-600"
+                                <input type="radio" name="tipe" value="terbuka" class="text-blue-600 focus:ring-blue-500 bg-slate-700 border-slate-600"
                                        {{ old('tipe', 'terbuka') == 'terbuka' ? 'checked' : '' }}>
                                 Terbuka
                             </label>
