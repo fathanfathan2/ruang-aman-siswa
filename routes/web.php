@@ -83,8 +83,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sesi-konseling', SesiKonselingController::class)
         ->only(['index', 'create', 'store', 'show', 'destroy']);
 
+    Route::get('/sesi-konseling/{id}/pesan', [SesiKonselingController::class, 'getPesan'])
+        ->name('sesi-konseling.pesan.get');
+
     Route::post('/sesi-konseling/{id}/pesan', [SesiKonselingController::class, 'storePesan'])
         ->name('sesi-konseling.pesan.store');
+
+    Route::delete('/sesi-konseling/{id}/pesan/clear', [SesiKonselingController::class, 'clearPesan'])
+        ->name('sesi-konseling.pesan.clear');
+
+    Route::delete('/sesi-konseling/{id}/pesan/{pesanId}', [SesiKonselingController::class, 'destroyPesan'])
+        ->name('sesi-konseling.pesan.destroy');
 });
 
 // HARUS SELALU BERADA DI BARIS PALING BAWAH
