@@ -15,92 +15,97 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Redirect setelah login / akses /dashboard langsung ke dashboard siswa
 Route::get('/dashboard', function () {
-    $role = auth()->user()->role;
-
-    if ($role === 'bk') {
-        return redirect('/bk/dashboard');
-    } elseif ($role === 'admin') {
-        return redirect('/admin/dashboard');
-    } else {
-        return redirect('/siswa/dashboard');
-    }
+    return redirect()->route('siswa.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// --- RUTE ROLE RUANG AMAN SISWA ---
-
-// Dashboard Siswa (Di-handle oleh SesiKonselingController milikmu)
-Route::get('/siswa/dashboard', [SesiKonselingController::class, 'dashboardSiswa'])->name('siswa.dashboard');
-
-// Dashboard BK (gabungan data Laporan + Histori Poin Kedisiplinan)
-Route::get('/bk/dashboard', function () {
-    $laporans = \App\Models\Laporan::latest()->get();
-
-    $catatanPoins = \App\Models\CatatanPoin::with(['siswa', 'pelanggaran'])
-        ->orderByDesc('tanggal')
-        ->limit(5)
-        ->get();
-
-    return view('bk.dashboard', compact('laporans', 'catatanPoins'));
-})->middleware(['auth', 'verified'])->name('bk.dashboard');
-
 // ==========================================
-// FITUR UNTUK ADMIN (Manajemen User)
+// PROFILE (semua role yang sudah login)
 // ==========================================
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-
-    // Halaman Utama Admin
-    Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
-
-    // Rute Lengkap CRUD (Create, Read, Update, Delete) untuk Kelola Akun
-    Route::resource('users', App\Http\Controllers\UserController::class);
-
-});
-
-// ----------------------------------
-
-// PROFILE → tetap membutuhkan login
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // ==========================================
-// FITUR UNTUK SISWA (Sesi Konseling & Laporan)
+// FITUR SISWA
 // ==========================================
-Route::get('/siswa/konseling', [SesiKonselingController::class, 'createKonseling'])->name('siswa.konseling.create');
-Route::post('/siswa/konseling', [SesiKonselingController::class, 'storeKonseling'])->name('siswa.konseling.store');
+Route::middleware(['auth'])->group(function () {
 
-// --- Rute Form Laporan Siswa ---
-Route::get('/siswa/lapor', [LaporanController::class, 'create'])->name('siswa.laporan.create');
-Route::post('/siswa/lapor', [LaporanController::class, 'store'])->name('siswa.laporan.store');
+    // Dashboard Siswa
+    Route::get('/siswa/dashboard', [SesiKonselingController::class, 'dashboardSiswa'])->name('siswa.dashboard');
+
+    // Form Booking Konseling
+    Route::get('/siswa/konseling', [SesiKonselingController::class, 'createKonseling'])->name('siswa.konseling.create');
+    Route::post('/siswa/konseling', [SesiKonselingController::class, 'storeKonseling'])->name('siswa.konseling.store');
+
+    // Form Buat Laporan
+    Route::get('/siswa/lapor', [LaporanController::class, 'create'])->name('siswa.laporan.create');
+    Route::post('/siswa/lapor', [LaporanController::class, 'store'])->name('siswa.laporan.store');
+});
 
 // ==========================================
-// FITUR UNTUK GURU BK
+// FITUR GURU BK
 // ==========================================
-Route::get('/bk/konseling', [SesiKonselingController::class, 'indexBk'])->name('bk.konseling.index');
-Route::patch('/bk/konseling/{id}/status', [SesiKonselingController::class, 'updateStatus'])->name('bk.konseling.update');
+Route::middleware(['auth'])->group(function () {
 
-// --- Aksi Laporan (Guru BK) ---
-Route::get('/bk/laporan/{id}', [LaporanController::class, 'showBk'])->name('bk.laporan.show');
-Route::patch('/bk/laporan/{id}/status', [LaporanController::class, 'updateStatusBk'])->name('bk.laporan.update');
+    // Dashboard BK (gabungan data Laporan + Histori Poin Kedisiplinan)
+    Route::get('/bk/dashboard', function () {
+        $laporans = \App\Models\Laporan::latest()->get();
 
-// --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
-Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)
-    ->except(['show']);
+        $catatanPoins = \App\Models\CatatanPoin::with(['siswa', 'pelanggaran'])
+            ->orderByDesc('tanggal')
+            ->limit(5)
+            ->get();
 
-Route::resource('jenis-prestasi', JenisPrestasiController::class)
-    ->except(['show']);
+        return view('bk.dashboard', compact('laporans', 'catatanPoins'));
+    })->name('bk.dashboard');
 
-Route::resource('catatan-poin', CatatanPoinController::class)
-    ->only(['index', 'create', 'store']);
+    // Kelola Konseling
+    Route::get('/bk/konseling', [SesiKonselingController::class, 'indexBk'])->name('bk.konseling.index');
+    Route::patch('/bk/konseling/{id}/status', [SesiKonselingController::class, 'updateStatus'])->name('bk.konseling.update');
 
-Route::resource('catatan-prestasi', CatatanPrestasiController::class)
-    ->only(['index', 'create', 'store']);
+    // Kelola Laporan
+    Route::get('/bk/laporan/{id}', [LaporanController::class, 'showBk'])->name('bk.laporan.show');
+    Route::patch('/bk/laporan/{id}/status', [LaporanController::class, 'updateStatusBk'])->name('bk.laporan.update');
 
-Route::get('/rekap-poin', [RekapPoinController::class, 'index'])->name('rekap-poin.index');
-// -------------------------------------------------
+    // --- TAMBAHAN DAVIN: SISTEM POIN KEDISIPLINAN ---
+    Route::resource('jenis-pelanggaran', JenisPelanggaranController::class)
+        ->except(['show']);
 
-// HARUS SELALU BERADA DI BARIS PALING BAWAH
-require __DIR__.'/auth.php';
+    Route::resource('jenis-prestasi', JenisPrestasiController::class)
+        ->except(['show']);
+
+    Route::resource('catatan-poin', CatatanPoinController::class)
+        ->only(['index', 'create', 'store']);
+
+    Route::resource('catatan-prestasi', CatatanPrestasiController::class)
+        ->only(['index', 'create', 'store']);
+
+    Route::get('/rekap-poin', [RekapPoinController::class, 'index'])->name('rekap-poin.index');
+    // -------------------------------------------------
+});
+
+// ==========================================
+// FITUR ADMIN
+// ==========================================
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+    Route::resource('users', App\Http\Controllers\UserController::class);
+});
+
+// ==========================================
+// SESI KONSELING RESOURCE
+// + FITUR TANYA JAWAB (CHAT)
+// ==========================================
+Route::middleware(['auth'])->group(function () {
+    Route::resource('sesi-konseling', SesiKonselingController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    Route::post('/sesi-konseling/{id}/pesan', [SesiKonselingController::class, 'storePesan'])
+        ->name('sesi-konseling.pesan.store');
+});
+
+// HARUS SELALU BERADA

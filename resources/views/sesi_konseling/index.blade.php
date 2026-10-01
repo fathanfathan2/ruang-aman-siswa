@@ -69,11 +69,20 @@
                             @forelse ($sesiKonselings as $index => $jadwal)
                                 <tr class="hover:bg-slate-700/30 transition-colors">
                                     <td class="px-6 py-4 font-medium text-slate-400">{{ $index + 1 }}</td>
-                                    <td class="px-6 py-4 font-bold text-white">{{ $jadwal->siswa->name ?? 'Siswa Tidak Ditemukan' }}</td>
+                                    <td class="px-6 py-4 font-bold text-white">
+                                        @if ($jadwal->tipe === 'anonim' && auth()->user()->role === 'bk' && $jadwal->siswa_id !== auth()->id())
+                                            <span class="text-slate-500 italic flex items-center gap-1.5">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                                Anonim
+                                            </span>
+                                        @else
+                                            {{ $jadwal->siswa->name ?? 'Siswa Tidak Ditemukan' }}
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-2">
                                             <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                            {{ \Carbon\Carbon::parse($jadwal->waktu_konseling)->format('d M Y, H:i') }}
+                                            {{ $jadwal->jadwal->format('d M Y, H:i') }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
@@ -81,6 +90,10 @@
                                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Menunggu</span>
                                         @elseif($jadwal->status == 'disetujui')
                                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Disetujui</span>
+                                        @elseif($jadwal->status == 'ditolak')
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">Ditolak</span>
+                                        @elseif($jadwal->status == 'selesai')
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-500/10 text-slate-400 border border-slate-500/20">Selesai</span>
                                         @else
                                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">Dibatalkan</span>
                                         @endif

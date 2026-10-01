@@ -57,98 +57,100 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-700/40">
-                            {{-- Baris contoh statis (data asli bisa di-loop dari controller) --}}
-                            <tr class="hover:bg-slate-700/30 transition-colors">
-                                <td class="px-6 py-4 font-medium text-slate-400">1</td>
-                                <td class="px-6 py-4 font-bold text-white">Siswa Terbuka</td>
-                                <td class="px-6 py-4 text-slate-300">Masalah Akademik</td>
-                                <td class="px-6 py-4">
-                                    <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Terbuka</span>
-                                </td>
-                                <td class="px-6 py-4 text-slate-400">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                        2026-09-20 10:00
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Menunggu</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <form action="/bk/konseling/1/status" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="disetujui">
-                                            <button type="submit" class="bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-md shadow-emerald-500/20">
-                                                Setujui
-                                            </button>
-                                        </form>
-                                        <form action="/bk/konseling/1/status" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="ditolak">
-                                            <button type="submit" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-lg transition">
-                                                Tolak
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-slate-700/30 transition-colors">
-                                <td class="px-6 py-4 font-medium text-slate-400">2</td>
-                                <td class="px-6 py-4 font-bold text-slate-500 italic">Anonim</td>
-                                <td class="px-6 py-4 text-slate-300">Bullying</td>
-                                <td class="px-6 py-4">
-                                    <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Anonim</span>
-                                </td>
-                                <td class="px-6 py-4 text-slate-400">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                        2026-09-21 13:00
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Menunggu</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <form action="/bk/konseling/2/status" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="disetujui">
-                                            <button type="submit" class="bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-md shadow-emerald-500/20">
-                                                Setujui
-                                            </button>
-                                        </form>
-                                        <form action="/bk/konseling/2/status" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="ditolak">
-                                            <button type="submit" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-lg transition">
-                                                Tolak
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
+                            @forelse ($sesiKonselings as $index => $sesi)
+                                <tr class="hover:bg-slate-700/30 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-slate-400">{{ $index + 1 }}</td>
 
-                            {{-- Jika data kosong tampilkan placeholder --}}
-                            @isset($pengajuans)
-                                @forelse($pengajuans as $item)
-                                {{-- Loop data asli dari controller nanti --}}
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="px-6 py-12 text-center text-slate-500">
-                                            <div class="flex flex-col items-center justify-center">
-                                                <svg class="w-12 h-12 mb-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                                <p class="font-medium text-slate-400">Belum ada pengajuan konseling dari siswa.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            @endisset
+                                    {{-- Nama Siswa (sembunyikan jika anonim) --}}
+                                    <td class="px-6 py-4 font-bold text-white">
+                                        @if ($sesi->tipe === 'anonim')
+                                            <span class="text-slate-500 italic flex items-center gap-1.5">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                                Anonim
+                                            </span>
+                                        @else
+                                            {{ $sesi->siswa->name ?? '-' }}
+                                        @endif
+                                    </td>
 
+                                    {{-- Topik --}}
+                                    <td class="px-6 py-4 text-slate-300">{{ $sesi->topik }}</td>
+
+                                    {{-- Tipe Badge --}}
+                                    <td class="px-6 py-4">
+                                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full border
+                                            {{ $sesi->tipe === 'terbuka'
+                                                ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                                                : 'bg-purple-500/10 text-purple-400 border-purple-500/20' }}">
+                                            {{ ucfirst($sesi->tipe) }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Jadwal --}}
+                                    <td class="px-6 py-4 text-slate-400">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            {{ $sesi->jadwal->format('d M Y, H:i') }}
+                                        </div>
+                                    </td>
+
+                                    {{-- Status Badge --}}
+                                    <td class="px-6 py-4">
+                                        @php
+                                            $statusColors = [
+                                                'menunggu'  => 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+                                                'disetujui' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+                                                'ditolak'   => 'bg-rose-500/10 text-rose-400 border-rose-500/20',
+                                                'selesai'   => 'bg-slate-500/10 text-slate-400 border-slate-500/20',
+                                            ];
+                                        @endphp
+                                        <span class="px-3 py-1 text-xs font-semibold rounded-full border {{ $statusColors[$sesi->status] ?? '' }}">
+                                            {{ ucfirst($sesi->status) }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Aksi --}}
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            {{-- Tombol Detail / Chat --}}
+                                            <a href="{{ route('sesi-konseling.show', $sesi->id) }}"
+                                               class="inline-flex items-center gap-1.5 bg-slate-700 hover:bg-cyan-600 text-slate-300 hover:text-white border border-slate-600 hover:border-cyan-500 text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                                                Chat
+                                            </a>
+
+                                            {{-- Tombol Setujui (hanya jika menunggu) --}}
+                                            @if ($sesi->status === 'menunggu')
+                                                <form action="{{ route('bk.konseling.update', $sesi->id) }}" method="POST" class="inline-block">
+                                                    @csrf @method('PATCH')
+                                                    <input type="hidden" name="status" value="disetujui">
+                                                    <button type="submit"
+                                                        class="bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-md shadow-emerald-500/20">
+                                                        Setujui
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('bk.konseling.update', $sesi->id) }}" method="POST" class="inline-block">
+                                                    @csrf @method('PATCH')
+                                                    <input type="hidden" name="status" value="ditolak">
+                                                    <button type="submit"
+                                                        class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                                        Tolak
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-12 text-center text-slate-500">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <svg class="w-12 h-12 mb-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            <p class="font-medium text-slate-400">Belum ada pengajuan konseling dari siswa.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
