@@ -20,10 +20,22 @@
                 <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <!-- Tombol Kembali -->
-                        <a href="{{ route('sesi-konseling.index') }}"
+                        @php
+                            $backUrl = match(auth()->user()->role) {
+                                'siswa' => route('siswa.dashboard'),
+                                'bk'    => route('bk.konseling.index'),
+                                default => route('sesi-konseling.index'),
+                            };
+                            $backLabel = match(auth()->user()->role) {
+                                'siswa' => 'Kembali ke Dashboard',
+                                'bk'    => 'Kembali ke Konseling BK',
+                                default => 'Kembali ke Daftar',
+                            };
+                        @endphp
+                        <a href="{{ $backUrl }}"
                            class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-50 hover:text-white transition-all bg-black/10 hover:bg-black/30 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                            Kembali ke Daftar
+                            {{ $backLabel }}
                         </a>
                         <h3 class="text-2xl font-bold tracking-wide">Detail Sesi Konseling</h3>
                         <p class="text-blue-100 text-sm mt-1">Informasi & ruang diskusi sesi konseling.</p>

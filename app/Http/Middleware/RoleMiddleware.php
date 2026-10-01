@@ -27,16 +27,8 @@ class RoleMiddleware
 
         $userRole = auth()->user()->role;
 
-        // Cek apakah role user ada dalam daftar role yang diizinkan
-        if (!in_array($userRole, $roles)) {
-            // Redirect ke dashboard sesuai role mereka
-            return match ($userRole) {
-                'admin'  => redirect('/admin/dashboard')->with('error', 'Akses ditolak. Halaman ini bukan untuk role kamu.'),
-                'bk'     => redirect('/bk/dashboard')->with('error', 'Akses ditolak. Halaman ini bukan untuk role kamu.'),
-                default  => redirect('/siswa/dashboard')->with('error', 'Akses ditolak. Halaman ini bukan untuk role kamu.'),
-            };
-        }
-
+        // Sistem pembatasan role dinonaktifkan sesuai permintaan:
+        // Semua user yang sudah login bebas mengakses halaman siswa, BK, dan admin.
         return $next($request);
     }
 }

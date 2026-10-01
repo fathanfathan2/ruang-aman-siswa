@@ -76,9 +76,12 @@ class SesiKonselingController extends Controller
 
     public function dashboardSiswa()
     {
-        $laporans         = \App\Models\Laporan::where('user_id', auth()->id())->latest()->get();
-        $jumlahKonseling  = \App\Models\SesiKonseling::where('siswa_id', auth()->id())->count();
-        return view('siswa.dashboard', compact('laporans', 'jumlahKonseling'));
+        $userId           = auth()->id();
+        $laporans         = \App\Models\Laporan::where('user_id', $userId)->latest()->get();
+        $sesiKonselings   = \App\Models\SesiKonseling::with(['pesans'])->where('siswa_id', $userId)->latest()->get();
+        $jumlahKonseling  = $sesiKonselings->count();
+
+        return view('siswa.dashboard', compact('laporans', 'sesiKonselings', 'jumlahKonseling'));
     }
 
     public function createKonseling()

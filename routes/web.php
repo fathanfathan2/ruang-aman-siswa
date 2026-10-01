@@ -12,14 +12,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Redirect setelah login sesuai role
+// Redirect setelah login / akses /dashboard langsung ke dashboard siswa
 Route::get('/dashboard', function () {
-    $role = auth()->user()->role;
-    return match ($role) {
-        'bk'    => redirect('/bk/dashboard'),
-        'admin' => redirect('/admin/dashboard'),
-        default => redirect('/siswa/dashboard'),
-    };
+    return redirect()->route('siswa.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // ==========================================
@@ -32,9 +27,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // ==========================================
-// FITUR SISWA — hanya role: siswa
+// FITUR SISWA
 // ==========================================
-Route::middleware(['auth', 'role:siswa'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Dashboard Siswa
     Route::get('/siswa/dashboard', [SesiKonselingController::class, 'dashboardSiswa'])->name('siswa.dashboard');
@@ -49,9 +44,9 @@ Route::middleware(['auth', 'role:siswa'])->group(function () {
 });
 
 // ==========================================
-// FITUR GURU BK — hanya role: bk
+// FITUR GURU BK
 // ==========================================
-Route::middleware(['auth', 'role:bk'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Dashboard BK
     Route::get('/bk/dashboard', function () {
@@ -73,18 +68,18 @@ Route::middleware(['auth', 'role:bk'])->group(function () {
 });
 
 // ==========================================
-// FITUR ADMIN — hanya role: admin
+// FITUR ADMIN
 // ==========================================
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
     Route::resource('users', App\Http\Controllers\UserController::class);
 });
 
 // ==========================================
-// SESI KONSELING RESOURCE (siswa & bk bisa akses)
-// + FITUR TANYA JAWAB
+// SESI KONSELING RESOURCE
+// + FITUR TANYA JAWAB (CHAT)
 // ==========================================
-Route::middleware(['auth', 'role:siswa,bk,admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::resource('sesi-konseling', SesiKonselingController::class)
         ->only(['index', 'create', 'store', 'show', 'destroy']);
 
