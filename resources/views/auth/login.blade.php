@@ -93,7 +93,7 @@
                     <form method="POST" action="{{ route('login') }}" @submit="loading = true" class="space-y-5">
                         @csrf
 
-                        {{-- Email / NIS (Diperbarui dengan kotak membulat & ramping) --}}
+                        {{-- Email / NIS --}}
                         <div>
                             <label for="email" class="mb-2 block text-sm font-medium text-slate-300">Email / NIS</label>
                             <input id="email" type="text" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
@@ -102,7 +102,7 @@
                             @error('email') <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p> @enderror
                         </div>
 
-                        {{-- Password (Diperbarui dengan kotak membulat & ramping) --}}
+                        {{-- Password --}}
                         <div>
                             <label for="password" class="mb-2 block text-sm font-medium text-slate-300">Kata Sandi</label>
                             <div class="relative">
@@ -143,17 +143,18 @@
                         </button>
                     </form>
 
-                    {{-- Pemisah ATAU --}}
-                    <div class="mt-7 flex items-center gap-4">
-                        <div class="h-px flex-1 bg-slate-700"></div>
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Atau</span>
-                        <div class="h-px flex-1 bg-slate-700"></div>
-                    </div>
+                    {{-- Opsi Register (Hanya muncul jika rute register tersedia di backend) --}}
+                    @if (Route::has('register'))
+                        <div class="mt-7 flex items-center gap-4">
+                            <div class="h-px flex-1 bg-slate-700"></div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Atau</span>
+                            <div class="h-px flex-1 bg-slate-700"></div>
+                        </div>
 
-                    {{-- Tombol Register --}}
-                    <a href="{{ route('register') }}" class="mt-5 flex w-full items-center justify-center rounded-xl border border-slate-600 bg-slate-800/50 px-4 py-3 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white">
-                        Daftar Akun Baru
-                    </a>
+                        <a href="{{ route('register') }}" class="mt-5 flex w-full items-center justify-center rounded-xl border border-slate-600 bg-slate-800/50 px-4 py-3 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white">
+                            Daftar Akun Baru
+                        </a>
+                    @endif
 
                 </div>
             </div>
