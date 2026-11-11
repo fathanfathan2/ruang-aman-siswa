@@ -7,9 +7,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
-// Halaman awal bawaan Laravel
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login'); // Langsung arahkan ke halaman login
 });
 
 // Redirect setelah login / akses /dashboard langsung ke dashboard siswa
