@@ -18,6 +18,7 @@ class Laporan extends Model
         'deskripsi',
         'is_anonim',
         'status',
+        'catatan_bk',
     ];
 
     // Relasi: 1 Laporan dimiliki oleh 1 User (Siswa)

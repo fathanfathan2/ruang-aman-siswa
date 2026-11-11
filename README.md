@@ -21,6 +21,18 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Supabase Database
+
+This application connects to Supabase through PostgreSQL so Laravel Eloquent and migrations continue to work. The Supabase REST API URL is not a PostgreSQL connection address.
+
+The `.env.example` contains the project connection settings. Set `DB_PASSWORD` in your local `.env` to the database password from Supabase, and make sure PHP has the `pdo_pgsql` extension enabled. Then run:
+
+```bash
+php artisan migrate
+```
+
+Running migrations creates the schema; it does not copy existing records from a MySQL database.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
