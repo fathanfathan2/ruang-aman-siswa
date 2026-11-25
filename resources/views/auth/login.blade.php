@@ -58,6 +58,13 @@
 
             {{-- Konten Kiri (Logo Besar & Nama) --}}
             <div class="relative z-10 flex flex-col items-start gap-6">
+                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 rounded-lg border border-slate-700/80 bg-slate-800/50 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-slate-600 hover:bg-slate-800 hover:text-white">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+                    </svg>
+                    <span>Kembali ke Beranda</span>
+                </a>
+
                 <!-- Logo Image RAS -->
                 <img src="{{ asset('images/logoras.png') }}" 
                      alt="Logo Ruang Aman Siswa" 

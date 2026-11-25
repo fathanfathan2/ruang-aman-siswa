@@ -7,9 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
+// Halaman Landing Page (tampil pertama kali sebelum pengguna login)
 Route::get('/', function () {
-    return redirect('/login'); // Langsung arahkan ke halaman login
-});
+    return view('welcome');
+})->name('landing');
 
 // Redirect setelah login / akses /dashboard langsung ke dashboard siswa
 Route::get('/dashboard', function () {
