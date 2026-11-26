@@ -28,7 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Langsung arahkan ke dashboard siswa setelah login
+        $user = Auth::user();
+
+        // Arahkan ke dashboard sesuai role masing-masing akun
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->role === 'bk') {
+            return redirect()->route('bk.dashboard');
+        }
+
         return redirect()->route('siswa.dashboard');
     }
 
